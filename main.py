@@ -1,13 +1,15 @@
 from copy import deepcopy
 from math import inf
 
-#w zadaniu będziemy iterować od zera! tzn indeks 0 oznacza pierwszy element
+# w zadaniu będziemy iterować od zera! tzn indeks 0 oznacza pierwszy element
 
-#funkcja redukująca macierz
+# funkcja redukująca macierz
 
-#posiada argument A: macierz do zredukowania
+# posiada argument A: macierz do zredukowania
 from typing import List, Tuple
+
 INF = float('inf')
+
 
 # zwraca listę minimalnych wartości w kolumnach
 def find_min_in_col(A: List[List[int]]) -> List[int]:
@@ -21,6 +23,7 @@ def find_min_in_col(A: List[List[int]]) -> List[int]:
         minimal_val = INF
     return result_vector
 
+
 # zwraca listę minimalnych wartości w wierszach
 def find_min_in_row(A: List[List[int]]) -> List[int]:
     minimal_val = INF
@@ -33,9 +36,10 @@ def find_min_in_row(A: List[List[int]]) -> List[int]:
         minimal_val = INF
     return result_vector
 
-def reduce_mat(A):
 
+def reduce_mat(A):
     pass
+
 
 def cross_out_minimal_line(A: List[List]):
     zeros_rows = [0 for _ in range(len(A))]
@@ -79,8 +83,8 @@ def cross_out_minimal_line(A: List[List]):
         for cc in crossed_c:
             A[cr][cc] += min_val
 
-def find_indep_zeros(A: List[List[int]]) -> List[Tuple[int]]:
 
+def find_indep_zeros(A: List[List[int]]) -> List[Tuple[int]]:
     lst_of_indep_zeros_tuple = []
     lst_of_taken_rows = []
     lst_of_taken_cols = []
@@ -94,29 +98,22 @@ def find_indep_zeros(A: List[List[int]]) -> List[Tuple[int]]:
     return lst_of_indep_zeros_tuple
 
 
-
 def hungarian_algotithm(A):
-
     initial_A = A.copy()
     reduce_mat(A)
     lst_of_indep_zeros_ids = find_indep_zeros(A)
-    #LICZBA ZER NIEZALEZNYCH MUSI BYĆ RÓWNA ROZMIAROWI MACIERZY: - sprawdzam ten warunek:
+    # LICZBA ZER NIEZALEZNYCH MUSI BYĆ RÓWNA ROZMIAROWI MACIERZY: - sprawdzam ten warunek:
     while len(lst_of_indep_zeros_ids) != len(A):
         cross_out_minimal_line(A)
         reduce_mat(A)
         lst_of_indep_zeros_ids = find_indep_zeros(A)
 
-    #lst_of_indep_zeros_ids to nasza lista połączeń maszyna - zadanie
+    # lst_of_indep_zeros_ids to nasza lista połączeń maszyna - zadanie
     sum = 0
     for task_machine in lst_of_indep_zeros_ids:
         sum += initial_A[task_machine[0]][task_machine[1]]
 
     return sum, lst_of_indep_zeros_ids
-
-
-
-
-
 
 
 if __name__ == "__main__":
@@ -126,7 +123,6 @@ if __name__ == "__main__":
 
     print(find_min_in_row(A))
 
-
     # A = [[5, 30, 0, 30], [65, 50, 0, 0], [0, 0, 55, 5], [55, 20, 0, 5]]
     print(find_indep_zeros(A))
     print(find_min_in_row(A))
@@ -134,4 +130,3 @@ if __name__ == "__main__":
     print(A)
     cross_out_minimal_line(A)
     print(A)
-
