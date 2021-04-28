@@ -54,18 +54,20 @@ def cross_out_minimal_line(A: List[List]):
         max_cols = max(zeros_cols)
         if max_rows >= max_cols:
             max_idx = zeros_rows.index(max(zeros_rows))
+            zeros_rows[max_idx] = 0
             crossed_r.append(max_idx)
             for col in range(len(A_copy)):
                 if A[max_idx][col] == 0:
-                    zeros_cols -= 1
-                A[max_idx][col] = inf
+                    zeros_cols[col] -= 1
+                A_copy[max_idx][col] = inf
         else:
             max_idx = zeros_cols.index(max(zeros_cols))
+            zeros_cols[max_idx] = 0
             crossed_c.append(max_idx)
             for row in range(len(A_copy)):
                 if A[row][max_idx] == 0:
-                    zeros_rows -= 1
-                A[row][max_idx] = inf
+                    zeros_rows[row] -= 1
+                A_copy[row][max_idx] = inf
 
     min_val = min((min(v) for v in A))
     for row in range(len(A_copy)):
@@ -128,4 +130,8 @@ if __name__ == "__main__":
     # A = [[5, 30, 0, 30], [65, 50, 0, 0], [0, 0, 55, 5], [55, 20, 0, 5]]
     print(find_indep_zeros(A))
     print(find_min_in_row(A))
+
+    print(A)
+    cross_out_minimal_line(A)
+    print(A)
 
