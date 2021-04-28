@@ -1,3 +1,5 @@
+from copy import deepcopy
+from math import inf
 from typing import List, Tuple
 INF = float('inf')
 #w zadaniu będziemy iterować od zera! tzn indeks 0 oznacza pierwszy element
@@ -42,9 +44,48 @@ def reduce_mat(A):
             operating_matrix[j][i] = operating_matrix[j][i] - min_in_cols[i]
     return operating_matrix
 
+def cross_out_minimal_line(A: List[List]):
+    zeros_rows = [0 for _ in range(len(A))]
+    zeros_cols = [0 for _ in range(len(A))]
+    A_copy = deepcopy(A)
+    for row in range(len(A_copy)):
+        for col in range(len(A_copy)):
+            if A_copy[row][col] == 0:
+                zeros_rows[row] += 1
+                zeros_cols[col] += 1
+
+    crossed_r = []
+    crossed_c = []
+    while sum(zeros_rows) != 0:
+        max_rows = max(zeros_rows)
+        max_cols = max(zeros_cols)
+        if max_rows >= max_cols:
+            max_idx = zeros_rows.index(max(zeros_rows))
+            crossed_r.append(max_idx)
+            for col in range(len(A_copy)):
+                if A[max_idx][col] == 0:
+                    zeros_cols -= 1
+                A[max_idx][col] = inf
+        else:
+            max_idx = zeros_rows.index(max(zeros_cols))
+            crossed_c.append(max_idx)
+            for row in range(len(A_copy)):
+                if A[row][max_idx] == 0:
+                    zeros_rows -= 1
+                A[row][max_idx] = inf
+
+    min_val = min((min(v) for v in A))
+    for row in range(len(A_copy)):
+        for col in range(len(A_copy)):
+            if A_copy[row][col] != inf:
+                A[row][col] -= min_val
+
+    for cr in crossed_r:
+        for cc in crossed_c:
+            A[cr][cc] += min_val
+
 
 def find_indep_zeros(A: List[List[int]]) -> List[Tuple[int, int]]:
-
     lst_of_indep_zeros_tuple = []
     lst_of_taken_rows = []
     lst_of_taken_cols = []
@@ -58,12 +99,16 @@ def find_indep_zeros(A: List[List[int]]) -> List[Tuple[int, int]]:
     return lst_of_indep_zeros_tuple
 
 
-def cross_out_minimal_line(A):
-    pass
-
-
 if __name__ == "__main__":
     M = [[1, 2, 5],
          [3, 4, 2],
          [3, 5, 3]]
     print(reduce_mat(M))
+    A = [[1, 2, -1],
+         [3, 4, 0],
+         [0, 1, 3]]
+    print(find_min_in_row(A))
+    print(int("inf"))
+    # A = [[5, 30, 0, 30], [65, 50, 0, 0], [0, 0, 55, 5], [55, 20, 0, 5]]
+    print(find_indep_zeros(A))
+    print(find_min_in_row(A))
