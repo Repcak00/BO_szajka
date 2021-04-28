@@ -1,10 +1,11 @@
 #funkcja redukująca macierz
 #posiada argument A: macierz do zredukowania
+from typing import List
 
-def find_min_in_col():
+def find_min_in_col(row: List[int]):
     pass
 
-def find_min_in_row():
+def find_min_in_row(column: List[int]):
     pass
 
 def reduce_mat(A):
