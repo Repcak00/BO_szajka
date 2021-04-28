@@ -93,6 +93,30 @@ def find_indep_zeros(A: List[List[int]]) -> List[Tuple[int]]:
 
 
 
+def hungarian_algotithm(A):
+
+    initial_A = A.copy()
+    reduce_mat(A)
+    lst_of_indep_zeros_ids = find_indep_zeros(A)
+    #LICZBA ZER NIEZALEZNYCH MUSI BYĆ RÓWNA ROZMIAROWI MACIERZY: - sprawdzam ten warunek:
+    while len(lst_of_indep_zeros_ids) != len(A):
+        cross_out_minimal_line(A)
+        reduce_mat(A)
+        lst_of_indep_zeros_ids = find_indep_zeros(A)
+
+    #lst_of_indep_zeros_ids to nasza lista połączeń maszyna - zadanie
+    sum = 0
+    for task_machine in lst_of_indep_zeros_ids:
+        sum += initial_A[task_machine[0]][task_machine[1]]
+
+    return sum, lst_of_indep_zeros_ids
+
+
+
+
+
+
+
 if __name__ == "__main__":
     A = [[1, 2, -1],
          [3, 4, 0],
