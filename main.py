@@ -9,7 +9,15 @@ INF = float('inf')
 
 # zwraca listę minimalnych wartości w kolumnach
 def find_min_in_col(A: List[List[int]]) -> List[int]:
-    pass
+    minimal_val = INF
+    result_vector = []
+    for i in range(len(A)):
+        for j in range(len(A)):
+            if A[j][i] < minimal_val:
+                minimal_val = A[j][i]
+        result_vector.append(minimal_val)
+        minimal_val = INF
+    return result_vector
 
 # zwraca listę minimalnych wartości w wierszach
 def find_min_in_row(A: List[List[int]]) -> List[int]:
