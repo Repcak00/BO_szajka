@@ -73,7 +73,7 @@ def cross_out_minimal_line(A: List[List]):
                     zeros_rows[row] -= 1
                 A_copy[row][max_idx] = inf
 
-    min_val = min((min(v) for v in A))
+    min_val = min((min(v) for v in A_copy))  # minimalna wartośc wśród niewykreślonych
     for row in range(len(A_copy)):
         for col in range(len(A_copy)):
             if A_copy[row][col] != inf:
