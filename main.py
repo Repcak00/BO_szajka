@@ -1,5 +1,11 @@
 #funkcja redukująca macierz
-#posiada argument A: macierz do zredykowania
+#posiada argument A: macierz do zredukowania
+
+def find_min_in_col():
+    pass
+
+def find_min_in_row():
+    pass
 
 def reduce_mat(A):
     pass
