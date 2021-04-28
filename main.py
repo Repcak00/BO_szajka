@@ -2,10 +2,12 @@
 #posiada argument A: macierz do zredukowania
 from typing import List
 
-def find_min_in_col(row: List[int]):
+# zwraca listę minimalnych wartości w kolumnach
+def find_min_in_vec(A: List[List[int]]) -> List[int]:
     pass
 
-def find_min_in_row(column: List[int]):
+# zwraca listę minimalnych wartości w wierszach
+def find_min_in_row(A: List[List[int]]) -> List[int]:
     pass
 
 def reduce_mat(A):
