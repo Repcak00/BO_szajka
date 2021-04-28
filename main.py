@@ -1,7 +1,7 @@
 #w zadaniu będziemy iterować od zera! tzn indeks 0 oznacza pierwszy element
 
 #posiada argument A: macierz do zredukowania
-from typing import List
+from typing import List, Tuple
 INF = float('inf')
 
 
@@ -43,7 +43,7 @@ def reduce_mat(A):
             operating_matrix[j][i] = operating_matrix[j][i] - min_in_cols[i]
     return operating_matrix
 
-def find_indep_zeros(A: list(list)) -> list(tuple):
+def find_indep_zeros(A: List[List[int]]) -> List[Tuple[int]]:
 
     lst_of_indep_zeros_tuple = []
     lst_of_taken_rows = []
@@ -51,14 +51,16 @@ def find_indep_zeros(A: list(list)) -> list(tuple):
     for row_id in range(len(A)):
         for col_id in range(len(A[row_id])):
             if A[row_id][col_id] == 0 and row_id not in lst_of_taken_rows and col_id not in lst_of_taken_cols:
+                lst_of_taken_rows.append(row_id)
+                lst_of_taken_cols.append(col_id)
                 lst_of_indep_zeros_tuple.append((row_id, col_id))
 
     return lst_of_indep_zeros_tuple
 
+
 def cross_out_minimal_line(A):
 
     pass
-
 
 
 
