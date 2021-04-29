@@ -38,7 +38,16 @@ def find_min_in_row(A: List[List[int]]) -> List[int]:
 
 
 def reduce_mat(A):
-    pass
+    operating_matrix = A.copy()
+    min_in_rows = find_min_in_row(operating_matrix)
+    for i in range(len(operating_matrix)):
+        for j in range(len(operating_matrix)):
+            operating_matrix[i][j] = operating_matrix[i][j] - min_in_rows[i]
+    min_in_cols = find_min_in_col(operating_matrix)
+    for i in range(len(operating_matrix)):
+        for j in range(len(operating_matrix)):
+            operating_matrix[j][i] = operating_matrix[j][i] - min_in_cols[i]
+    return operating_matrix
 
 
 def cross_out_minimal_line(A: List[List]):
@@ -84,7 +93,7 @@ def cross_out_minimal_line(A: List[List]):
             A[cr][cc] += min_val
 
 
-def find_indep_zeros(A: List[List[int]]) -> List[Tuple[int]]:
+def find_indep_zeros(A: List[List[int]]) -> List[Tuple[int, int]]:
     lst_of_indep_zeros_tuple = []
     lst_of_taken_rows = []
     lst_of_taken_cols = []
