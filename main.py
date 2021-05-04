@@ -1,11 +1,9 @@
-from copy import deepcopy
-from math import inf
-
 # w zadaniu będziemy iterować od zera! tzn indeks 0 oznacza pierwszy element
 
 # funkcja redukująca macierz
 
 # posiada argument A: macierz do zredukowania
+from copy import deepcopy
 from typing import List, Tuple
 
 INF = float('inf')
@@ -72,7 +70,7 @@ def cross_out_minimal_line(A: List[List]):
             for col in range(len(A_copy)):
                 if A[max_idx][col] == 0:
                     zeros_cols[col] -= 1
-                A_copy[max_idx][col] = inf
+                A_copy[max_idx][col] = INF
         else:
             max_idx = zeros_cols.index(max(zeros_cols))
             zeros_cols[max_idx] = 0
@@ -80,12 +78,12 @@ def cross_out_minimal_line(A: List[List]):
             for row in range(len(A_copy)):
                 if A[row][max_idx] == 0:
                     zeros_rows[row] -= 1
-                A_copy[row][max_idx] = inf
+                A_copy[row][max_idx] = INF
 
-    min_val = min((min(v) for v in A_copy))  # minimalna wartośc wśród niewykreślonych
+    min_val = min((min(v) for v in A_copy))  # minimalna wartość wśród niewykreślonych
     for row in range(len(A_copy)):
         for col in range(len(A_copy)):
-            if A_copy[row][col] != inf:
+            if A_copy[row][col] != INF:
                 A[row][col] -= min_val
 
     for cr in crossed_r:
@@ -107,7 +105,7 @@ def find_indep_zeros(A: List[List[int]]) -> List[Tuple[int, int]]:
     return lst_of_indep_zeros_tuple
 
 
-def hungarian_algotithm(A):
+def hungarian_algorithm(A):
     initial_A = A.copy()
     reduce_mat(A)
     lst_of_indep_zeros_ids = find_indep_zeros(A)
