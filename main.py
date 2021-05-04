@@ -106,7 +106,7 @@ def find_indep_zeros(A: List[List[int]]) -> List[Tuple[int, int]]:
 
 
 def hungarian_algorithm(A):
-    initial_A = A.copy()
+    initial_A = deepcopy(A)
     reduce_mat(A)
     lst_of_indep_zeros_ids = find_indep_zeros(A)
     # LICZBA ZER NIEZALEZNYCH MUSI BYĆ RÓWNA ROZMIAROWI MACIERZY: - sprawdzam ten warunek:
@@ -124,16 +124,12 @@ def hungarian_algorithm(A):
 
 
 if __name__ == "__main__":
-    A = [[1, 2, -1],
-         [3, 4, 0],
-         [0, 1, 3]]
+    # A = [[1, 2, -1],
+    #      [3, 4, 0],
+    #      [0, 1, 3]]
 
-    print(find_min_in_row(A))
-
-    # A = [[5, 30, 0, 30], [65, 50, 0, 0], [0, 0, 55, 5], [55, 20, 0, 5]]
-    print(find_indep_zeros(A))
-    print(find_min_in_row(A))
-
-    print(A)
-    cross_out_minimal_line(A)
-    print(A)
+    A = [[5, 30, 0, 30],
+         [65, 50, 0, 0],
+         [0, 0, 55, 5],
+         [55, 20, 0, 5]]
+    print(hungarian_algorithm(A))
