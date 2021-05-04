@@ -1,11 +1,9 @@
-from copy import deepcopy
-from math import inf
-
 # w zadaniu będziemy iterować od zera! tzn indeks 0 oznacza pierwszy element
 
 # funkcja redukująca macierz
 
 # posiada argument A: macierz do zredukowania
+from copy import deepcopy
 from typing import List, Tuple
 
 INF = float('inf')
@@ -38,7 +36,16 @@ def find_min_in_row(A: List[List[int]]) -> List[int]:
 
 
 def reduce_mat(A):
-    pass
+    operating_matrix = A.copy()
+    min_in_rows = find_min_in_row(operating_matrix)
+    for i in range(len(operating_matrix)):
+        for j in range(len(operating_matrix)):
+            operating_matrix[i][j] = operating_matrix[i][j] - min_in_rows[i]
+    min_in_cols = find_min_in_col(operating_matrix)
+    for i in range(len(operating_matrix)):
+        for j in range(len(operating_matrix)):
+            operating_matrix[j][i] = operating_matrix[j][i] - min_in_cols[i]
+    return operating_matrix
 
 
 def cross_out_minimal_line(A: List[List]):
@@ -63,7 +70,7 @@ def cross_out_minimal_line(A: List[List]):
             for col in range(len(A_copy)):
                 if A[max_idx][col] == 0:
                     zeros_cols[col] -= 1
-                A_copy[max_idx][col] = inf
+                A_copy[max_idx][col] = INF
         else:
             max_idx = zeros_cols.index(max(zeros_cols))
             zeros_cols[max_idx] = 0
@@ -71,12 +78,12 @@ def cross_out_minimal_line(A: List[List]):
             for row in range(len(A_copy)):
                 if A[row][max_idx] == 0:
                     zeros_rows[row] -= 1
-                A_copy[row][max_idx] = inf
+                A_copy[row][max_idx] = INF
 
-    min_val = min((min(v) for v in A_copy))  # minimalna wartośc wśród niewykreślonych
+    min_val = min((min(v) for v in A_copy))  # minimalna wartość wśród niewykreślonych
     for row in range(len(A_copy)):
         for col in range(len(A_copy)):
-            if A_copy[row][col] != inf:
+            if A_copy[row][col] != INF:
                 A[row][col] -= min_val
 
     for cr in crossed_r:
@@ -84,7 +91,7 @@ def cross_out_minimal_line(A: List[List]):
             A[cr][cc] += min_val
 
 
-def find_indep_zeros(A: List[List[int]]) -> List[Tuple[int]]:
+def find_indep_zeros(A: List[List[int]]) -> List[Tuple[int, int]]:
     lst_of_indep_zeros_tuple = []
     lst_of_taken_rows = []
     lst_of_taken_cols = []
@@ -98,8 +105,8 @@ def find_indep_zeros(A: List[List[int]]) -> List[Tuple[int]]:
     return lst_of_indep_zeros_tuple
 
 
-def hungarian_algotithm(A):
-    initial_A = A.copy()
+def hungarian_algorithm(A):
+    initial_A = deepcopy(A)
     reduce_mat(A)
     lst_of_indep_zeros_ids = find_indep_zeros(A)
     # LICZBA ZER NIEZALEZNYCH MUSI BYĆ RÓWNA ROZMIAROWI MACIERZY: - sprawdzam ten warunek:
@@ -117,16 +124,12 @@ def hungarian_algotithm(A):
 
 
 if __name__ == "__main__":
-    A = [[1, 2, -1],
-         [3, 4, 0],
-         [0, 1, 3]]
+    # A = [[1, 2, -1],
+    #      [3, 4, 0],
+    #      [0, 1, 3]]
 
-    print(find_min_in_row(A))
-
-    # A = [[5, 30, 0, 30], [65, 50, 0, 0], [0, 0, 55, 5], [55, 20, 0, 5]]
-    print(find_indep_zeros(A))
-    print(find_min_in_row(A))
-
-    print(A)
-    cross_out_minimal_line(A)
-    print(A)
+    A = [[5, 30, 0, 30],
+         [65, 50, 0, 0],
+         [0, 0, 55, 5],
+         [55, 20, 0, 5]]
+    print(hungarian_algorithm(A))
