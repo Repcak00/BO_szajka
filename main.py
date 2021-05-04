@@ -132,4 +132,5 @@ if __name__ == "__main__":
          [65, 50, 0, 0],
          [0, 0, 55, 5],
          [55, 20, 0, 5]]
+
     print(hungarian_algorithm(A))
